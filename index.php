@@ -27,8 +27,11 @@ $username = htmlspecialchars($_SESSION['username']);
 </head>
 
 <body class="w-full min-h-screen flex flex-col justify-start items-center">
-    <header class="w-full bg-gray-100 flex flex-row justify-between items-center px-4">
-        <img src="assets/itk.png" alt="ITK" class="w-36 h-24">
+    <header class="w-full bg-gray-100 flex flex-row justify-between items-center px-4 shadow-lg">
+        <div class="flex flex-row justify-center items-center">
+            <img src="assets/itk.png" alt="ITK" class="w-auto h-28">
+            <img src="assets/teknikelektro.png" alt="ITK" class="w-auto h-28">
+        </div>
         <div class="flex flex-row justify-center items-center gap-4 text-gray-700">
             <a href="index.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
                 <i class="fas fa-home"></i>
@@ -43,15 +46,15 @@ $username = htmlspecialchars($_SESSION['username']);
                 <p>History</p>
             </a>
             <a href="logout.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-sign-out-alt"></i>     
+                <i class="fas fa-sign-out-alt"></i>
                 <p>Keluar</p>
             </a>
         </div>
     </header>
     <div class="flex flex-col justify-center items-center flex-grow space-y-4">
-        <h1 class="text-2xl">Selamat datang, <?php echo $username ?></h1>
-        <a href="monitoring.php" class="border border-blue-600 text-blue-600 font-semibold py-2 px-4 rounded hover:bg-blue-100 transition duration-300">Monitoring</a>
-        <a href="history.php" class="border border-blue-600 text-blue-600 font-semibold py-2 px-4 rounded hover:bg-blue-100 transition duration-300">History</a>
+        <h1 class="text-2xl font-bold text-gray-800">Selamat datang, <?php echo $username ?></h1>
+        <a href="monitoring.php" class="border border-blue-500 text-blue-500 font-semibold py-3 px-6 rounded hover:bg-blue-100 transition duration-300">Monitoring</a>
+        <a href="history.php" class="border border-blue-500 text-blue-500 font-semibold py-3 px-6 rounded hover:bg-blue-100 transition duration-300">History</a>
     </div>
 </body>
 

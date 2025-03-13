@@ -28,7 +28,10 @@ $username = htmlspecialchars($_SESSION['username']);
 
 <body class="w-full min-h-screen flex flex-col justify-start items-center">
     <header class="w-full bg-gray-100 flex flex-row justify-between items-center px-4">
-        <img src="assets/itk.png" alt="ITK" class="w-36 h-24">
+        <div class="flex flex-row justify-center items-center">
+            <img src="assets/itk.png" alt="ITK" class="w-auto h-28">
+            <img src="assets/teknikelektro.png" alt="ITK" class="w-auto h-28">
+        </div>
         <div class="flex flex-row justify-center items-center gap-4 text-gray-700">
             <a href="index.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
                 <i class="fas fa-home"></i>
@@ -43,18 +46,27 @@ $username = htmlspecialchars($_SESSION['username']);
                 <p>History</p>
             </a>
             <a href="logout.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-sign-out-alt"></i>     
+                <i class="fas fa-sign-out-alt"></i>
                 <p>Keluar</p>
             </a>
         </div>
     </header>
     <div class="flex flex-col justify-center items-center flex-grow space-y-4">
-        <h1 class="text-2xl font-bold text-center w-full">MONITORING</h1>
+        <h1 class="text-2xl font-bold text-gray-800 text-center w-full">MONITORING</h1>
         <div class="w-full border-t border-gray-300 my-4"></div>
         <div class="flex flex-row justify-center items-center gap-4">
-            <a href="" class="border p-4 flex flex-row justify-center items-center w-40 h-40 text-center">DAYA</a>
-            <a href="" class="border p-4 flex flex-row justify-center items-center w-40 h-40 text-center">STATUS PENGISIAN</a>
-            <a href="" class="border p-4 flex flex-row justify-center items-center w-40 h-40 text-center">STATUS BATTERY PENYIMPANAN</a>
+            <a href="#" class="border border-gray-300 rounded-lg p-4 w-40 h-40 flex flex-col justify-center items-center text-center text-gray-700 hover:bg-blue-50 transition duration-300">
+                <i class="fa-solid fa-bolt text-3xl text-yellow-500 mb-2"></i>
+                DAYA
+            </a>
+            <a href="#" class="border border-gray-300 rounded-lg p-4 w-40 h-40 flex flex-col justify-center items-center text-center text-gray-700 hover:bg-blue-50 transition duration-300">
+                <i class="fa-solid fa-plug text-3xl text-green-500 mb-2"></i>
+                STATUS PENGISIAN
+            </a>
+            <a href="#" class="border border-gray-300 rounded-lg p-4 w-40 h-40 flex flex-col justify-center items-center text-center text-gray-700 hover:bg-blue-50 transition duration-300">
+                <i class="fa-solid fa-battery-full text-3xl text-blue-500 mb-2"></i>
+                STATUS BATTERY PENYIMPANAN
+            </a>
         </div>
     </div>
 
