@@ -27,7 +27,7 @@ $username = htmlspecialchars($_SESSION['username']);
 </head>
 
 <body class="w-full min-h-screen flex flex-col justify-start items-center">
-    <header class="w-full bg-gray-100 flex flex-row justify-between items-center px-4 shadow-lg">
+    <header class="w-full bg-blue-50 border-b border-blue-100 flex flex-row justify-between items-center px-4">
         <div class="flex flex-row justify-center items-center">
             <img src="assets/itk.png" alt="ITK" class="w-auto h-28">
             <img src="assets/teknikelektro.png" alt="ITK" class="w-auto h-28">
