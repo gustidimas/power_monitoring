@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+require 'db_config.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
@@ -9,6 +9,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $username = htmlspecialchars($_SESSION['username']);
 
+$history_sql = "SELECT * FROM power_data ORDER BY timestamp DESC";
+$history_result = $conn->query($history_sql);
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -18,88 +22,73 @@ $username = htmlspecialchars($_SESSION['username']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
-
-    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script>
+        setTimeout(() => {
+            window.location.reload();
+        }, 10000);
+    </script>
 </head>
-<style>
-    .background1 {
-        background-image: url('assets/gedungITK.jpeg');
-        background-size: cover;
-        background-position: bottom;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-    }
-</style>
 
-<body class="w-full min-h-screen flex flex-col justify-start items-center">
-    <header class="w-full bg-zinc-50 border-b border-blue-100 flex flex-row justify-between items-center px-4">
-        <div class="flex flex-row justify-center items-center">
-            <img src="assets/itk.png" alt="ITK" class="w-auto h-28">
-            <img src="assets/teknikelektro.png" alt="ITK" class="w-auto h-28">
-        </div>
-        <div class="flex flex-row justify-center items-center gap-4  text-gray-700">
-            <a href="index.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-home"></i>
-                <p>Beranda</p>
-            </a>
-            <a href="monitoring.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-tachometer-alt"></i>
-                <p>Monitoring</p>
-            </a>
-            <a href="history.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-history"></i>
-                <p>History</p>
-            </a>
-            <a href="logout.php" class="flex flex-row justify-center items-center gap-1 hover:text-black">
-                <i class="fas fa-sign-out-alt"></i>
-                <p>Keluar</p>
-            </a>
-        </div>
-    </header>
-    <div class="w-full flex-grow grid grid-cols-1 grid-rows-3 items-center">
-        <div class="background1"></div>
-        <div class="w-full h-full flex row-start-2 row-end-4 flex-col justify-start items-center bg-zinc-50 p-8 rounded-lg shadow-md gap-6">
-            <h1 class="text-2xl font-bold text-gray-800">Monitoring Energi</h1>
-            <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Username
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Tanggal
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Waktu Pengisian
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Daya yang Dihasilkan
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">john_doe</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">2023-10-15</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">14:30</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">1200 Watt</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">jane_smith</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">2023-10-16</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">09:45</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">1500 Watt</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<body class="w-full min-h-screen flex overflow-x-hidden">
+    <div class="flex w-full h-full">
+
+        <!-- Navigasi -->
+        <aside class="w-64 min-h-screen bg-blue-100 text-gray-500 flex flex-col p-4">
+            <h2 class="text-xl font-bold mb-6 text-black text-center">CSH</h2>
+            <nav class="flex flex-col gap-2">
+                <a href="index.php" class="hover:bg-blue-400 hover:text-white p-2 rounded">Dashboard</a>
+                <a href="history.php" class="bg-blue-500 text-white hover p-2 rounded">Riwayat</a>
+                <a href="account.php" class="hover:bg-blue-400 hover:text-white p-2 rounded">Akun</a>
+                <a href="logout.php" class="bg-red-500 text-white p-2 rounded mt-auto text-center">Keluar</a>
+            </nav>
+        </aside>
+        <main class="w-full flex-grow bg-gray-100 px-4 py-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-blue-800">TABEL RIWAYAT <span class="text-sm font-normal text-gray-500">Terakhir diperbarui: <?= $data['timestamp']; ?> | Sekarang: <?= date("Y-m-d H:i:s"); ?></span></h1>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left text-gray-600">
+                    <thead class="bg-gray-200 text-gray-700 font-semibold">
+                        <tr>
+                            <th class="py-2 px-4">No</th>
+                            <th class="py-2 px-4">Voltage (V)</th>
+                            <th class="py-2 px-4">Power (W)</th>
+                            <th class="py-2 px-4">Battery Status</th>
+                            <th class="py-2 px-4">Battery Level (%)</th>
+                            <th class="py-2 px-4">Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-100">
+                        <?php if ($history_result && $history_result->num_rows > 0): ?>
+                            <?php $no = 1; ?>
+                            <?php while ($row = $history_result->fetch_assoc()): ?>
+                                <tr>
+                                    <td class="py-2 px-4"><?= $no++; ?></td>
+                                    <td class="py-2 px-4"><?= $row['voltage']; ?></td>
+                                    <td class="py-2 px-4"><?= $row['power']; ?></td>
+                                    <td class="py-2 px-4"><?= ucfirst($row['battery_status']); ?></td>
+                                    <td class="py-2 px-4"><?= $row['battery_level']; ?>%</td>
+                                    <td class="py-2 px-4"><?= $row['timestamp']; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="py-4 px-4 text-center text-gray-500">Tidak ada data tersedia.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
     </div>
-
+    </main>
+    </div>
 </body>
 
 </html>

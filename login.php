@@ -68,18 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="w-full min-h-screen flex flex-col justify-start items-center">
-    <header class="w-full bg-zinc-50 flex flex-row justify-between items-center px-4">
-        <div class="flex flex-row justify-center items-center">
-            <img src="assets/itk.png" alt="ITK" class="w-auto h-28">
-            <img src="assets/teknikelektro.png" alt="ITK" class="w-auto h-28">
-        </div>
-    </header>
     <main class="w-full flex-grow grid grid-cols-1 md:grid-cols-2 items-center">
         <div class="h-full w-full flex flex-row justify-center items-center">
             <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md space-y-6">
                 <div class="flex flex-col items-center space-y-2">
                     <i class="fa-solid fa-plug-circle-check text-5xl text-blue-500"></i>
                     <h2 class="text-xl font-bold text-gray-800">Login</h2>
+                    <p class="text-gray-500">Masukkan user dan password untuk masuk.</p>
                 </div>
 
 
@@ -131,8 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
         </div>
-        <div class="h-full w-full bg-blue-300 hidden md:flex justify-center items-center">
-            <img src="assets/itk.png" alt="ITK" class="w-auto h-96">
+        <div class="h-full w-full bg-[url('assets/solar-panel.png')] bg-cover bg-left bg-no-repeat">
         </div>
     </main>
 </body>
