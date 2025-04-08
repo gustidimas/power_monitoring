@@ -1,4 +1,6 @@
 <?php
+
+// Memulai sesi jika belum ada, maka akan langsung ke login
 session_start();
 require 'db_config.php';
 
@@ -7,18 +9,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-$username = htmlspecialchars($_SESSION['username']);
-
+// Perintah SQL untuk mengambil data terbaru dari database
 $sql = "SELECT * FROM power_data ORDER BY timestamp DESC LIMIT 1";
 $result = $conn->query($sql);
 
+// Perintah SQL untuk mengambil semua data dari database
 $history_sql = "SELECT * FROM power_data ORDER BY timestamp DESC";
 $history_result = $conn->query($history_sql);
 
+// Kebutuhan pagination pada tabel riwayat
 $limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Perintah SQL untuk mengambil data sesuai dengan kebutuhan tabel
 $paginated_sql = "SELECT * FROM power_data ORDER BY timestamp DESC LIMIT $limit OFFSET $offset";
 $paginated_result = $conn->query($paginated_sql);
 
@@ -27,6 +31,7 @@ $total_result = $conn->query($total_sql);
 $total_rows = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_rows / $limit);
 
+// Menyimpan data terbaru sementara
 $data = [
     'voltage' => '-',
     'power' => '-',
@@ -35,6 +40,7 @@ $data = [
     'timestamp' => '-'
 ];
 
+// Jika data ada, maka akan disimpan pada variabel data diatas
 if ($result && $result->num_rows > 0) {
     $data = $result->fetch_assoc();
 }
@@ -160,6 +166,7 @@ $conn->close();
                     </table>
                 </div>
 
+                <!-- Pagination -->
                 <div class="flex justify-center mt-4 space-x-2">
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                         <a href="?page=<?= $i; ?>" class="px-3 py-1 rounded <?= $i == $page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'; ?>">

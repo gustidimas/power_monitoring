@@ -1,3 +1,5 @@
+<!-- Config untuk koneksi ke database -->
+
 <?php
 $host = "localhost";
 $username = "root";

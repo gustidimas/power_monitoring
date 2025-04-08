@@ -1,3 +1,5 @@
+<!-- Perintah untuk menghancurkan sesi, alias logout -->
+
 <?php
 
 session_start();

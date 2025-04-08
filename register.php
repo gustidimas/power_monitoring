@@ -1,8 +1,10 @@
 <?php
 
+// Mengambil error jika terjadi kesalahan
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Memulai sesi jika sudah ada, maka akan langsung ke dashboard
 session_start();
 require "db_config.php";
 
@@ -11,8 +13,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     exit;
 }
 
+// Jika terjadi error, akan tersimpan sementara
 $errors = [];
 
+// Mengirim data username dan password untuk kebutuhan register
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
@@ -86,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="text-gray-500">Silahkan isi data untuk membuat akun baru.</p>
                 </div>
 
+                <!-- Menampilkan pesan -->
                 <?php if (!empty($errors)): ?>
                     <div class="text-red-500 text-sm text-center">
                         <?php foreach ($errors as $error): ?>
@@ -94,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
 
+                <!-- Form register -->
                 <form method="post" id="registrationForm" class="space-y-4">
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>

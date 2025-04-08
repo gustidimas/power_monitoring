@@ -1,5 +1,6 @@
 <?php
 
+// Memulai sesi jika belum ada, maka akan langsung ke login
 session_start();
 require 'db_config.php';
 
@@ -8,6 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
+// Menyimpan username loggedin sementara
 $username = htmlspecialchars($_SESSION['username']);
 
 ?>
@@ -42,6 +44,7 @@ $username = htmlspecialchars($_SESSION['username']);
                     <h1 class="text-2xl font-bold text-blue-800">AKUN</h1>
                 </div>
 
+                <!-- Data user loggedin -->
                 <div class="flex flex-col justify-center items-center">
                     <i class="fas fa-user-circle text-9xl text-blue-400 mb-2"></i>
                     <p class="text-lg font-semibold text-gray-700"><?= $username; ?></p>

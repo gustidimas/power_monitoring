@@ -1,8 +1,10 @@
 <?php
 
+// Mengambil error jika terjadi kesalahan
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Memulai sesi jika sudah ada, maka akan langsung ke dashboard
 session_start();
 require 'db_config.php';
 
@@ -11,12 +13,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     exit;
 }
 
+// Jika terjadi error, akan tersimpan sementara
 $errors = [];
 
+// Jika berhasil registrasi akan muncul pesan
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $successMessage = "Registrasi berhasil. Silahkan masuk!";
 }
 
+// Mengirim data username dan password untuk kebutuhan login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
@@ -77,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="text-gray-500">Masukkan user dan password untuk masuk.</p>
                 </div>
 
-
+                <!-- Menampilkan pesan -->
                 <?php if (!empty($successMessage)): ?>
                     <div class="text-green-500 text-sm text-center">
                         <p><?php echo htmlspecialchars($successMessage); ?></p>
@@ -92,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
 
-
+                <!-- Form Login -->
                 <form method="post" class="space-y-4">
 
                     <div class="relative">

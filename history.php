@@ -1,4 +1,6 @@
 <?php
+
+// Memulai sesi jika belum ada, maka akan langsung ke login
 session_start();
 require 'db_config.php';
 
@@ -7,8 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-$username = htmlspecialchars($_SESSION['username']);
-
+// Perintah SQL untuk mengambil semua data
 $history_sql = "SELECT * FROM power_data ORDER BY timestamp DESC";
 $history_result = $conn->query($history_sql);
 
